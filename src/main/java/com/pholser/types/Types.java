@@ -17,6 +17,6 @@ public class Types {
         Type fromEquivalent = Primitives.equivalentOf(from);
         if (isPrimitive(toEquivalent))
             return canBeWidened(toEquivalent, fromEquivalent);
-        return false;
+        return ((Class<?>) to).isAssignableFrom((Class<?>) from);
     }
 }
