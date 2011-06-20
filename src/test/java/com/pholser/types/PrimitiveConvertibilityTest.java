@@ -2,7 +2,7 @@ package com.pholser.types;
 
 import org.junit.Test;
 
-public class TypesTest {
+public class PrimitiveConvertibilityTest {
     @Test
     public void foo() {
         
