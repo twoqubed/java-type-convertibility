@@ -6,6 +6,7 @@ import java.lang.reflect.InvocationTargetException;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.junit.Rule;
+import org.junit.Test;
 import org.junit.experimental.theories.DataPoints;
 import org.junit.experimental.theories.Theories;
 import org.junit.experimental.theories.Theory;
@@ -15,17 +16,17 @@ import org.junit.runner.RunWith;
 
 import static org.junit.rules.ExpectedException.*;
 
-@RunWith(Theories.class)
-public class UtilityClassesShouldNotBeInstantiatedTest {
+public abstract class UtilityClassesShouldNotBeInstantiated {
     @Rule public final ExpectedException thrown = none();
 
-    @DataPoints
-    public static Class<?>[] utilityClasses() {
-        return new Class<?>[] { Types.class, Primitives.class };
+    private final Class<?> utility;
+
+    protected UtilityClassesShouldNotBeInstantiated(Class<?> utility) {
+        this.utility = utility;
     }
 
-    @Theory
-    public void attemptInstantiation(Class<?> utility) throws Exception {
+    @Test
+    public void attemptInstantiation() throws Exception {
         thrown.expect(InvocationTargetException.class);
         thrown.expect(causeOfType(UnsupportedOperationException.class));
 
