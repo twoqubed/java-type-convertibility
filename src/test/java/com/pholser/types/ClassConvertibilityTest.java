@@ -15,15 +15,21 @@ import static org.junit.Assume.*;
 public class ClassConvertibilityTest {
     @Theory
     public void assignable(@ReferenceType Type to, @ReferenceType Type from) {
-        assumeTrue(((Class<?>) to).isAssignableFrom((Class<?>) from));
+        assumeTrue(assignableClasses(to, from));
+
         assertTrue(Types.areConvertible(to, from));
     }
 
     @Theory
     public void notAssignable(@ReferenceType Type to, @ReferenceType Type from) {
-        assumeTrue(!((Class<?>) to).isAssignableFrom((Class<?>) from));
+        assumeTrue(!assignableClasses(to, from));
         assumeTrue(!isPrimitiveWrapper(to));
         assumeTrue(!isPrimitiveWrapper(from));
+
         assertFalse(Types.areConvertible(to, from));
+    }
+
+    private boolean assignableClasses(Type to, Type from) {
+        return ((Class<?>) to).isAssignableFrom((Class<?>) from);
     }
 }

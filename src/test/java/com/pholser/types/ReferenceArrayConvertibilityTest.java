@@ -30,13 +30,19 @@ public class ReferenceArrayConvertibilityTest {
 
     @Theory
     public void componentTypesAssignable(@ReferenceArrayType Type to, @ReferenceArrayType Type from) {
-        assumeTrue(((Class<?>) to).getComponentType().isAssignableFrom(((Class<?>) from).getComponentType()));
+        assumeTrue(assignableComponentTypes(to, from));
+
         assertTrue(Types.areConvertible(to, from));
     }
 
     @Theory
     public void componentTypesNotAssignable(@ReferenceArrayType Type to, @ReferenceArrayType Type from) {
-        assumeTrue(!((Class<?>) to).getComponentType().isAssignableFrom(((Class<?>) from).getComponentType()));
+        assumeTrue(!assignableComponentTypes(to, from));
+
         assertFalse(Types.areConvertible(to, from));
+    }
+
+    private boolean assignableComponentTypes(Type to, Type from) {
+        return ((Class<?>) to).getComponentType().isAssignableFrom(((Class<?>) from).getComponentType());
     }
 }
