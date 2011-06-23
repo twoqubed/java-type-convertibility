@@ -63,4 +63,8 @@ class Primitives {
     static boolean isPrimitive(Type type) {
         return type instanceof Class<?> && ((Class<?>) type).isPrimitive();
     }
+
+    static boolean isPrimitiveWrapper(Type type) {
+        return PRIMITIVE_EQUIVALENTS.containsKey(type);
+    }
 }
