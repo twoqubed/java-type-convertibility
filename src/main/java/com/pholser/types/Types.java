@@ -2,7 +2,6 @@ package com.pholser.types;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.security.PrivateKey;
 
 import static com.pholser.types.Primitives.*;
 
@@ -33,9 +32,8 @@ public class Types {
     }
 
     private static boolean areConvertible(Type to, ParameterizedType from) {
-        Type fromRawType = from.getRawType();
-        return fromRawType instanceof Class
+        return from.getRawType() instanceof Class
                 && to instanceof Class
-                && ( (Class)to).isAssignableFrom( (Class) fromRawType);
+                && ( (Class)to).isAssignableFrom( (Class) from.getRawType());
     }
 }

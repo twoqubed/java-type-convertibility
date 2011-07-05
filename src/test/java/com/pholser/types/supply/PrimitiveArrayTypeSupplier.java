@@ -1,12 +1,11 @@
 package com.pholser.types.supply;
 
+import com.google.common.base.Predicate;
+import org.junit.experimental.theories.ParametersSuppliedBy;
+
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 import java.lang.reflect.Type;
-
-import com.google.common.base.Predicate;
-import com.google.common.collect.Iterables;
-import org.junit.experimental.theories.ParametersSuppliedBy;
 
 import static java.lang.annotation.ElementType.*;
 import static java.lang.annotation.RetentionPolicy.*;

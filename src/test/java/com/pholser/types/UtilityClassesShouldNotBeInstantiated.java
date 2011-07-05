@@ -1,18 +1,14 @@
 package com.pholser.types;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.experimental.theories.DataPoints;
-import org.junit.experimental.theories.Theories;
-import org.junit.experimental.theories.Theory;
 import org.junit.internal.matchers.TypeSafeMatcher;
 import org.junit.rules.ExpectedException;
-import org.junit.runner.RunWith;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 
 import static org.junit.rules.ExpectedException.*;
 
