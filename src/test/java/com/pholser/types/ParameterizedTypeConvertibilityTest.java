@@ -15,21 +15,26 @@ import static org.junit.Assume.*;
 
 @RunWith(Theories.class)
 public class ParameterizedTypeConvertibilityTest {
+    
+    /*
+     * Collection -> Collection<?>
+     * ArrayList -> Collection<?>
+     */
     @Theory
-    public void rawTypeToWildcardType(@ParameterizedCollectionType Type to, @RawCollectionType Type from) {
-        assumeTrue(isSingleWildcardWithNoUpperOrLowerBound(to, from));
-        assumeTrue(wildcardTypeSameAsRawType(to, from));
+    public void toWildcardTypeFromRawType(@ParameterizedCollectionType Type to, @RawCollectionType Type from) {
+        assumeTrue(isSingleWildcardWithNoUpperOrLowerBound(to));
+        assumeTrue(wildcardTypeAssignableFromRawType(to, from));
 
         assertTrue(Types.areConvertible(to, from));
     }
 
-    private boolean wildcardTypeSameAsRawType(Type to, Type from) {
+    private boolean wildcardTypeAssignableFromRawType(Type to, Type from) {
         ParameterizedType parameterizedType = (ParameterizedType) to;
         Type rawType = parameterizedType.getRawType();
-        return rawType.equals(from);
+        return rawType instanceof Class && ((Class) rawType).isAssignableFrom( (Class) from);
     }
 
-    private boolean isSingleWildcardWithNoUpperOrLowerBound(Type to, Type from) {
+    private boolean isSingleWildcardWithNoUpperOrLowerBound(Type to) {
         ParameterizedType parameterizedType = (ParameterizedType) to;
         if (parameterizedType.getActualTypeArguments().length != 1) {
             return false;

@@ -25,9 +25,9 @@ public class Types {
     }
 
     private static boolean areConvertible(ParameterizedType to, Type from) {
-        if (from instanceof Class) {
-            return to.getRawType().equals(from);
-        }
-        return false;
+        Type toRawType = to.getRawType();
+        return toRawType instanceof Class
+                && from instanceof Class
+                && ( (Class) toRawType).isAssignableFrom( (Class) from);
     }
 }
