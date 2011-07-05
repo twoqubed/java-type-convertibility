@@ -22,7 +22,7 @@ public class ParameterizedTypeConvertibilityTest {
      */
     @Theory
     public void toWildcardTypeFromRawType(@ParameterizedCollectionType Type to, @RawCollectionType Type from) {
-        assumeTrue(isSingleWildcardWithNoUpperOrLowerBound(to));
+        assumeTrue(isSingleWildcardWithNoUpperOrLowerBound((ParameterizedType) to));
         assumeTrue(wildcardTypeAssignableFromRawType((ParameterizedType) to, (Class) from));
 
         assertTrue(Types.areConvertible(to, from));
@@ -34,7 +34,7 @@ public class ParameterizedTypeConvertibilityTest {
      */
     @Theory
     public void toRawTypeFromWildcardType(@RawCollectionType Type to, @ParameterizedCollectionType Type from) {
-        assumeTrue(isSingleWildcardWithNoUpperOrLowerBound(from));
+        assumeTrue(isSingleWildcardWithNoUpperOrLowerBound((ParameterizedType) from));
         assumeTrue(rawTypeAssignableFromWildcardType((Class) to, (ParameterizedType) from));
 
         assertTrue(Types.areConvertible(to, from));
@@ -50,8 +50,7 @@ public class ParameterizedTypeConvertibilityTest {
                 rawType.isAssignableFrom(((Class) parameterizedType.getRawType()));
     }
 
-    private boolean isSingleWildcardWithNoUpperOrLowerBound(Type to) {
-        ParameterizedType parameterizedType = (ParameterizedType) to;
+    private boolean isSingleWildcardWithNoUpperOrLowerBound(ParameterizedType parameterizedType) {
         if (parameterizedType.getActualTypeArguments().length != 1) {
             return false;
         }
