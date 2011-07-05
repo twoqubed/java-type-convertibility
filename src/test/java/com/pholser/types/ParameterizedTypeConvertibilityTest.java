@@ -21,7 +21,7 @@ public class ParameterizedTypeConvertibilityTest {
      * ArrayList -> Collection<?>
      */
     @Theory
-    public void toWildcardTypeFromRawType(@ParameterizedCollectionType Type to, @RawCollectionType Type from) {
+    public void toAssignableWildcardTypeFromRawType(@ParameterizedCollectionType Type to, @RawCollectionType Type from) {
         assumeTrue(isSingleHuhWildcardType((ParameterizedType) to));
         assumeTrue(wildcardTypeAssignableFromRawType((ParameterizedType) to, (Class) from));
 
@@ -30,16 +30,40 @@ public class ParameterizedTypeConvertibilityTest {
     }
 
     /*
+     * List -> Set<?>
+     */
+    @Theory
+    public void toUnassignableWildcardTypeFromRawType(@ParameterizedCollectionType Type to, @RawCollectionType Type from) {
+        assumeTrue(isSingleHuhWildcardType((ParameterizedType) to));
+        assumeTrue(!wildcardTypeAssignableFromRawType((ParameterizedType) to, (Class) from));
+
+//        System.out.println(String.format("%s -> %s", from, to));
+        assertFalse(Types.areConvertible(to, from));
+    }
+
+    /*
      * Collection<?> -> Collection
      * ArrayList<?> -> Collection
      */
     @Theory
-    public void toRawTypeFromWildcardType(@RawCollectionType Type to, @ParameterizedCollectionType Type from) {
+    public void toAssignableRawTypeFromWildcardType(@RawCollectionType Type to, @ParameterizedCollectionType Type from) {
         assumeTrue(isSingleHuhWildcardType((ParameterizedType) from));
         assumeTrue(rawTypeAssignableFromWildcardType((Class) to, (ParameterizedType) from));
 
 //        System.out.println(String.format("%s -> %s", from, to));
         assertTrue(Types.areConvertible(to, from));
+    }
+
+    /*
+     * List<?> -> Set
+     */
+    @Theory
+    public void toUnassignableRawTypeFromWildcardType(@RawCollectionType Type to, @ParameterizedCollectionType Type from) {
+        assumeTrue(isSingleHuhWildcardType((ParameterizedType) from));
+        assumeTrue(!rawTypeAssignableFromWildcardType((Class) to, (ParameterizedType) from));
+
+//        System.out.println(String.format("%s -> %s", from, to));
+        assertFalse(Types.areConvertible(to, from));
     }
 
     private boolean wildcardTypeAssignableFromRawType(ParameterizedType parameterizedType, Class rawType) {
