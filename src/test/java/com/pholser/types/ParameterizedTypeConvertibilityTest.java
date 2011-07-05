@@ -22,7 +22,7 @@ public class ParameterizedTypeConvertibilityTest {
      */
     @Theory
     public void toWildcardTypeFromRawType(@ParameterizedCollectionType Type to, @RawCollectionType Type from) {
-        assumeTrue(isSingleWildcardWithNoUpperOrLowerBound((ParameterizedType) to));
+        assumeTrue(isSingleHuhWildcardType((ParameterizedType) to));
         assumeTrue(wildcardTypeAssignableFromRawType((ParameterizedType) to, (Class) from));
 
 //        System.out.println(String.format("%s -> %s", from, to));
@@ -35,7 +35,7 @@ public class ParameterizedTypeConvertibilityTest {
      */
     @Theory
     public void toRawTypeFromWildcardType(@RawCollectionType Type to, @ParameterizedCollectionType Type from) {
-        assumeTrue(isSingleWildcardWithNoUpperOrLowerBound((ParameterizedType) from));
+        assumeTrue(isSingleHuhWildcardType((ParameterizedType) from));
         assumeTrue(rawTypeAssignableFromWildcardType((Class) to, (ParameterizedType) from));
 
 //        System.out.println(String.format("%s -> %s", from, to));
@@ -52,16 +52,15 @@ public class ParameterizedTypeConvertibilityTest {
                 rawType.isAssignableFrom(((Class) parameterizedType.getRawType()));
     }
 
-    private boolean isSingleWildcardWithNoUpperOrLowerBound(ParameterizedType parameterizedType) {
-        if (parameterizedType.getActualTypeArguments().length != 1) {
-            return false;
-        }
-        if (!(parameterizedType.getActualTypeArguments()[0] instanceof WildcardType)) {
-            return false;
-        }
-        WildcardType wildcard = (WildcardType) parameterizedType.getActualTypeArguments()[0];
-        return wildcard.getUpperBounds()[0].equals(Object.class)
-                && wildcard.getLowerBounds().length == 0;
+    private boolean isSingleHuhWildcardType(ParameterizedType parameterizedType) {
+        Type[] typeArguments = parameterizedType.getActualTypeArguments();
+        return typeArguments.length == 1
+                && typeArguments[0] instanceof WildcardType
+                && isHuhWildcardType((WildcardType) typeArguments[0]);
+    }
+
+    private boolean isHuhWildcardType(WildcardType wildcardType) {
+        return wildcardType.getUpperBounds()[0].equals(Object.class) && wildcardType.getLowerBounds().length == 0;
     }
 
 }
