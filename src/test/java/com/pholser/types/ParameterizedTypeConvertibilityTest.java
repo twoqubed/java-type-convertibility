@@ -25,6 +25,7 @@ public class ParameterizedTypeConvertibilityTest {
         assumeTrue(isSingleWildcardWithNoUpperOrLowerBound((ParameterizedType) to));
         assumeTrue(wildcardTypeAssignableFromRawType((ParameterizedType) to, (Class) from));
 
+//        System.out.println(String.format("%s -> %s", from, to));
         assertTrue(Types.areConvertible(to, from));
     }
 
@@ -37,6 +38,7 @@ public class ParameterizedTypeConvertibilityTest {
         assumeTrue(isSingleWildcardWithNoUpperOrLowerBound((ParameterizedType) from));
         assumeTrue(rawTypeAssignableFromWildcardType((Class) to, (ParameterizedType) from));
 
+//        System.out.println(String.format("%s -> %s", from, to));
         assertTrue(Types.areConvertible(to, from));
     }
 
