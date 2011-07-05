@@ -23,15 +23,31 @@ public class ParameterizedTypeConvertibilityTest {
     @Theory
     public void toWildcardTypeFromRawType(@ParameterizedCollectionType Type to, @RawCollectionType Type from) {
         assumeTrue(isSingleWildcardWithNoUpperOrLowerBound(to));
-        assumeTrue(wildcardTypeAssignableFromRawType(to, from));
+        assumeTrue(wildcardTypeAssignableFromRawType((ParameterizedType) to, (Class) from));
 
         assertTrue(Types.areConvertible(to, from));
     }
 
-    private boolean wildcardTypeAssignableFromRawType(Type to, Type from) {
-        ParameterizedType parameterizedType = (ParameterizedType) to;
-        Type rawType = parameterizedType.getRawType();
-        return rawType instanceof Class && ((Class) rawType).isAssignableFrom( (Class) from);
+    /*
+     * Collection<?> -> Collection
+     * ArrayList<?> -> Collection
+     */
+    @Theory
+    public void toRawTypeFromWildcardType(@RawCollectionType Type to, @ParameterizedCollectionType Type from) {
+        assumeTrue(isSingleWildcardWithNoUpperOrLowerBound(from));
+        assumeTrue(rawTypeAssignableFromWildcardType((Class) to, (ParameterizedType) from));
+
+        assertTrue(Types.areConvertible(to, from));
+    }
+
+    private boolean wildcardTypeAssignableFromRawType(ParameterizedType parameterizedType, Class rawType) {
+        return parameterizedType.getRawType() instanceof Class &&
+                ((Class) parameterizedType.getRawType()).isAssignableFrom(rawType);
+    }
+
+    private boolean rawTypeAssignableFromWildcardType(Class rawType, ParameterizedType parameterizedType) {
+        return parameterizedType.getRawType() instanceof Class &&
+                rawType.isAssignableFrom(((Class) parameterizedType.getRawType()));
     }
 
     private boolean isSingleWildcardWithNoUpperOrLowerBound(Type to) {

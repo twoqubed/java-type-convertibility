@@ -21,13 +21,21 @@ public class Types {
             return canBeWidened(toEquivalent, fromEquivalent);
         if (to instanceof ParameterizedType)
             return areConvertible((ParameterizedType) to, from);
+        if (from instanceof ParameterizedType)
+            return areConvertible(to, (ParameterizedType) from);
         return ((Class<?>) to).isAssignableFrom((Class<?>) from);
     }
 
     private static boolean areConvertible(ParameterizedType to, Type from) {
-        Type toRawType = to.getRawType();
-        return toRawType instanceof Class
+        return to.getRawType() instanceof Class
                 && from instanceof Class
-                && ( (Class) toRawType).isAssignableFrom( (Class) from);
+                && ( (Class) to.getRawType()).isAssignableFrom( (Class) from);
+    }
+
+    private static boolean areConvertible(Type to, ParameterizedType from) {
+        Type fromRawType = from.getRawType();
+        return fromRawType instanceof Class
+                && to instanceof Class
+                && ( (Class)to).isAssignableFrom( (Class) fromRawType);
     }
 }
