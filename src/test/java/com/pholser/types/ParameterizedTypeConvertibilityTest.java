@@ -21,7 +21,7 @@ public class ParameterizedTypeConvertibilityTest {
      * ArrayList -> Collection<?>
      */
     @Theory
-    public void toAssignableWildcardTypeFromRawType(@ParameterizedCollectionType Type to, @RawCollectionType Type from) {
+    public void toAssignableHuhTypeFromRawType(@ParameterizedCollectionType Type to, @RawCollectionType Type from) {
         assumeTrue(isSingleHuhWildcardType((ParameterizedType) to));
         assumeTrue(wildcardTypeAssignableFromRawType((ParameterizedType) to, (Class) from));
 
@@ -33,7 +33,7 @@ public class ParameterizedTypeConvertibilityTest {
      * List -> Set<?>
      */
     @Theory
-    public void toUnassignableWildcardTypeFromRawType(@ParameterizedCollectionType Type to, @RawCollectionType Type from) {
+    public void toUnassignableHuhFromRawType(@ParameterizedCollectionType Type to, @RawCollectionType Type from) {
         assumeTrue(isSingleHuhWildcardType((ParameterizedType) to));
         assumeTrue(!wildcardTypeAssignableFromRawType((ParameterizedType) to, (Class) from));
 
@@ -46,7 +46,7 @@ public class ParameterizedTypeConvertibilityTest {
      * ArrayList<?> -> Collection
      */
     @Theory
-    public void toAssignableRawTypeFromWildcardType(@RawCollectionType Type to, @ParameterizedCollectionType Type from) {
+    public void toAssignableRawTypeFromHuh(@RawCollectionType Type to, @ParameterizedCollectionType Type from) {
         assumeTrue(isSingleHuhWildcardType((ParameterizedType) from));
         assumeTrue(rawTypeAssignableFromWildcardType((Class) to, (ParameterizedType) from));
 
@@ -58,7 +58,7 @@ public class ParameterizedTypeConvertibilityTest {
      * List<?> -> Set
      */
     @Theory
-    public void toUnassignableRawTypeFromWildcardType(@RawCollectionType Type to, @ParameterizedCollectionType Type from) {
+    public void toUnassignableRawTypeFromHuh(@RawCollectionType Type to, @ParameterizedCollectionType Type from) {
         assumeTrue(isSingleHuhWildcardType((ParameterizedType) from));
         assumeTrue(!rawTypeAssignableFromWildcardType((Class) to, (ParameterizedType) from));
 
